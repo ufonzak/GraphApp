@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using MongoDB.Driver;
+using MongoDB.Bson;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -10,46 +11,32 @@ namespace WebServices.DAO
 {
     public class GraphNodeDAO : IGraphNodeDAO
     {
+        IMongoCollection<GraphNode> Nodes => Kernel.Get<IMongoDatabase>().GetCollection<GraphNode>("graphNodes");
+
         public GraphNodeDAO()
         {
+
         }
 
         public async Task<GraphNode> GetGraphNode(string id)
         {
-            GraphNode node;
-            if (!storage.TryGetValue(id, out node))
-            {
-                return null;
-            }
-
-            return node;
+            return await Nodes.Find(Builders<GraphNode>.Filter.Eq("_id", id)).FirstOrDefaultAsync();
         }
 
         public async Task SyncGraphNode(GraphNode node)
         {
             node.IsValid = true;
-            storage[node.ID] = node;
+            await Nodes.ReplaceOneAsync(Builders<GraphNode>.Filter.Eq("_id", node.ID), node, new UpdateOptions() { IsUpsert = true });
         }
 
         public async Task InvalidateAllGraphNodes()
         {
-            foreach (var node in storage.Values)
-            {
-                node.IsValid = false;
-            }
+            await Nodes.UpdateManyAsync(Builders<GraphNode>.Filter.Empty, Builders<GraphNode>.Update.Set(n => n.IsValid, false));
         }
 
         public async Task DeleteAllInvalidGraphNodes()
         {
-            foreach (var key in storage
-                .Where(pair => !pair.Value.IsValid)
-                .Select(pair => pair.Key)
-                .ToArray())
-            {
-                storage.Remove(key);
-            }
+            await Nodes.DeleteManyAsync(Builders<GraphNode>.Filter.Eq(n => n.IsValid, false));
         }
-
-        private Dictionary<string, GraphNode> storage = new Dictionary<string, GraphNode>();
     }
 }
