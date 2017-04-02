@@ -10,16 +10,21 @@ using WebServices.DAO;
 
 namespace WebServices
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class GraphManagementService : IGraphManagementService
     {
         public async Task<GraphNode> GetGraphNode(string id)
         {
-            throw new NotImplementedException();
+            var graphNodeDAO = Kernel.Get<IGraphNodeDAO>();
+
+            return await graphNodeDAO.GetGraphNode(id);
         }
 
         public async Task SyncGraphNode(GraphNode node)
         {
-            throw new NotImplementedException();
+            var graphNodeDAO = Kernel.Get<IGraphNodeDAO>();
+
+            await graphNodeDAO.SyncGraphNode(node);
         }
     }
 }
