@@ -13,11 +13,25 @@ namespace WebServices
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class GraphManagementService : IGraphManagementService
     {
+        public async Task DeleteAllInvalidGraphNodes()
+        {
+            var graphNodeDAO = Kernel.Get<IGraphNodeDAO>();
+
+            await graphNodeDAO.DeleteAllInvalidGraphNodes();
+        }
+
         public async Task<GraphNode> GetGraphNode(string id)
         {
             var graphNodeDAO = Kernel.Get<IGraphNodeDAO>();
 
             return await graphNodeDAO.GetGraphNode(id);
+        }
+
+        public async Task InvalidateAllGraphNodes()
+        {
+            var graphNodeDAO = Kernel.Get<IGraphNodeDAO>();
+
+            await graphNodeDAO.InvalidateAllGraphNodes();
         }
 
         public async Task SyncGraphNode(GraphNode node)

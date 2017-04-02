@@ -105,6 +105,18 @@ namespace IntegrationTests.Services {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphManagementService/SyncGraphNode", ReplyAction="http://tempuri.org/IGraphManagementService/SyncGraphNodeResponse")]
         System.Threading.Tasks.Task SyncGraphNodeAsync(IntegrationTests.Services.GraphNode node);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphManagementService/InvalidateAllGraphNodes", ReplyAction="http://tempuri.org/IGraphManagementService/InvalidateAllGraphNodesResponse")]
+        void InvalidateAllGraphNodes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphManagementService/InvalidateAllGraphNodes", ReplyAction="http://tempuri.org/IGraphManagementService/InvalidateAllGraphNodesResponse")]
+        System.Threading.Tasks.Task InvalidateAllGraphNodesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphManagementService/DeleteAllInvalidGraphNodes", ReplyAction="http://tempuri.org/IGraphManagementService/DeleteAllInvalidGraphNodesResponse")]
+        void DeleteAllInvalidGraphNodes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphManagementService/DeleteAllInvalidGraphNodes", ReplyAction="http://tempuri.org/IGraphManagementService/DeleteAllInvalidGraphNodesResponse")]
+        System.Threading.Tasks.Task DeleteAllInvalidGraphNodesAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -148,6 +160,22 @@ namespace IntegrationTests.Services {
         
         public System.Threading.Tasks.Task SyncGraphNodeAsync(IntegrationTests.Services.GraphNode node) {
             return base.Channel.SyncGraphNodeAsync(node);
+        }
+        
+        public void InvalidateAllGraphNodes() {
+            base.Channel.InvalidateAllGraphNodes();
+        }
+        
+        public System.Threading.Tasks.Task InvalidateAllGraphNodesAsync() {
+            return base.Channel.InvalidateAllGraphNodesAsync();
+        }
+        
+        public void DeleteAllInvalidGraphNodes() {
+            base.Channel.DeleteAllInvalidGraphNodes();
+        }
+        
+        public System.Threading.Tasks.Task DeleteAllInvalidGraphNodesAsync() {
+            return base.Channel.DeleteAllInvalidGraphNodesAsync();
         }
     }
 }

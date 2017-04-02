@@ -20,6 +20,18 @@
   <wsdl:message name="IGraphManagementService_SyncGraphNode_OutputMessage">
     <wsdl:part name="parameters" element="tns:SyncGraphNodeResponse" />
   </wsdl:message>
+  <wsdl:message name="IGraphManagementService_InvalidateAllGraphNodes_InputMessage">
+    <wsdl:part name="parameters" element="tns:InvalidateAllGraphNodes" />
+  </wsdl:message>
+  <wsdl:message name="IGraphManagementService_InvalidateAllGraphNodes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InvalidateAllGraphNodesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGraphManagementService_DeleteAllInvalidGraphNodes_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAllInvalidGraphNodes" />
+  </wsdl:message>
+  <wsdl:message name="IGraphManagementService_DeleteAllInvalidGraphNodes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAllInvalidGraphNodesResponse" />
+  </wsdl:message>
   <wsdl:portType name="IGraphManagementService">
     <wsdl:operation name="GetGraphNode">
       <wsdl:input wsaw:Action="http://tempuri.org/IGraphManagementService/GetGraphNode" message="tns:IGraphManagementService_GetGraphNode_InputMessage" />
@@ -28,6 +40,14 @@
     <wsdl:operation name="SyncGraphNode">
       <wsdl:input wsaw:Action="http://tempuri.org/IGraphManagementService/SyncGraphNode" message="tns:IGraphManagementService_SyncGraphNode_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGraphManagementService/SyncGraphNodeResponse" message="tns:IGraphManagementService_SyncGraphNode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InvalidateAllGraphNodes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGraphManagementService/InvalidateAllGraphNodes" message="tns:IGraphManagementService_InvalidateAllGraphNodes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGraphManagementService/InvalidateAllGraphNodesResponse" message="tns:IGraphManagementService_InvalidateAllGraphNodes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAllInvalidGraphNodes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGraphManagementService/DeleteAllInvalidGraphNodes" message="tns:IGraphManagementService_DeleteAllInvalidGraphNodes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGraphManagementService/DeleteAllInvalidGraphNodesResponse" message="tns:IGraphManagementService_DeleteAllInvalidGraphNodes_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IGraphManagementService" type="tns:IGraphManagementService">
@@ -43,6 +63,24 @@
     </wsdl:operation>
     <wsdl:operation name="SyncGraphNode">
       <soap:operation soapAction="http://tempuri.org/IGraphManagementService/SyncGraphNode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InvalidateAllGraphNodes">
+      <soap:operation soapAction="http://tempuri.org/IGraphManagementService/InvalidateAllGraphNodes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAllInvalidGraphNodes">
+      <soap:operation soapAction="http://tempuri.org/IGraphManagementService/DeleteAllInvalidGraphNodes" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

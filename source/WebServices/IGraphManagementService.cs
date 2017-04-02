@@ -18,5 +18,11 @@ namespace WebServices
 
         [OperationContract]
         Task SyncGraphNode(GraphNode node);
+
+        [OperationContract]
+        Task InvalidateAllGraphNodes();
+
+        [OperationContract]
+        Task DeleteAllInvalidGraphNodes();
     }
 }

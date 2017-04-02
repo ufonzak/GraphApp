@@ -9,6 +9,11 @@ namespace WebServices.DAO
     interface IGraphNodeDAO
     {
         Task SyncGraphNode(GraphNode node);
+
         Task<GraphNode> GetGraphNode(string id);
+
+        Task InvalidateAllGraphNodes();
+
+        Task DeleteAllInvalidGraphNodes();
     }
 }

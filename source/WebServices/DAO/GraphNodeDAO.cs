@@ -16,12 +16,38 @@ namespace WebServices.DAO
 
         public async Task<GraphNode> GetGraphNode(string id)
         {
-            return storage[id];
+            GraphNode node;
+            if (!storage.TryGetValue(id, out node))
+            {
+                return null;
+            }
+
+            return node;
         }
 
         public async Task SyncGraphNode(GraphNode node)
         {
+            node.IsValid = true;
             storage[node.ID] = node;
+        }
+
+        public async Task InvalidateAllGraphNodes()
+        {
+            foreach (var node in storage.Values)
+            {
+                node.IsValid = false;
+            }
+        }
+
+        public async Task DeleteAllInvalidGraphNodes()
+        {
+            foreach (var key in storage
+                .Where(pair => !pair.Value.IsValid)
+                .Select(pair => pair.Key)
+                .ToArray())
+            {
+                storage.Remove(key);
+            }
         }
 
         private Dictionary<string, GraphNode> storage = new Dictionary<string, GraphNode>();

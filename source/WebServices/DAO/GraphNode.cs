@@ -19,5 +19,7 @@ namespace WebServices.DAO
 
         [DataMember]
         public List<string> AdjacentNodeIDs { get; set; }
+
+        public bool IsValid { get; set; }
     }
 }
