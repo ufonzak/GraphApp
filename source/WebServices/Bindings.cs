@@ -1,11 +1,8 @@
-﻿using Ninject.Modules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Ninject.Modules;
+using System.Configuration;
 using WebServices.DAO;
 using MongoDB.Driver;
-using System.Configuration;
 
 namespace WebServices
 {

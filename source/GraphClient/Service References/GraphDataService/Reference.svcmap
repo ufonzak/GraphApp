@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="962784b5-4f99-414a-bc27-f0b6e5302435" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:51676/GraphDataService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="GraphDataService.xsd" MetadataType="Schema" ID="73f0e34a-47f3-4b52-8889-3d942aedc87a" SourceId="1" SourceUrl="http://localhost:51676/GraphDataService.svc?xsd=xsd1" />
+    <MetadataFile FileName="GraphDataService.wsdl" MetadataType="Wsdl" ID="3abfec03-4d5e-425a-997d-7c2682a5bdf0" SourceId="1" SourceUrl="http://localhost:51676/GraphDataService.svc?wsdl" />
+    <MetadataFile FileName="GraphDataService1.xsd" MetadataType="Schema" ID="affa8b6f-fb6a-44cb-8b7d-4718fd46f3a5" SourceId="1" SourceUrl="http://localhost:51676/GraphDataService.svc?xsd=xsd2" />
+    <MetadataFile FileName="GraphDataService.disco" MetadataType="Disco" ID="36e389b7-bce5-4c69-8dfa-8940b6106c61" SourceId="1" SourceUrl="http://localhost:51676/GraphDataService.svc?disco" />
+    <MetadataFile FileName="GraphDataService2.xsd" MetadataType="Schema" ID="f21a17c8-277c-4a61-a9c7-64463294c88a" SourceId="1" SourceUrl="http://localhost:51676/GraphDataService.svc?xsd=xsd0" />
+    <MetadataFile FileName="GraphDataService3.xsd" MetadataType="Schema" ID="be4ea251-026e-4319-8e23-635884997cd0" SourceId="1" SourceUrl="http://localhost:51676/GraphDataService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

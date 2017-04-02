@@ -72,8 +72,10 @@ namespace DataLoader
     {
         [XmlElement("id")]
         public string ID { get; set; }
+
         [XmlElement("label")]
         public string Label { get; set; }
+
         [XmlArray("adjacentNodes")]
         [XmlArrayItem(ElementName = "id")]
         public string[] AdjacentNodes { get; set; }
