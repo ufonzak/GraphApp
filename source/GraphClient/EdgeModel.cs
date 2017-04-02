@@ -17,6 +17,17 @@ namespace GraphClient
         public Point P1 => Node1.Position;
         public Point P2 => Node2.Position;
 
+        private bool marked;
+        public bool Marked
+        {
+            get { return marked; }
+            set
+            {
+                marked = value;
+                RaisePropertyChanged("Marked");
+            }
+        }
+
         public EdgeModel(GraphNodeModel _node1, GraphNodeModel _node2)
         {
             Node1 = _node1;

@@ -6,76 +6,88 @@
              xmlns:local="clr-namespace:GraphClient"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-        <Canvas Name="canvas">
+    <UserControl.Resources>
+        <local:BoolToBrushConverter x:Key="SelectedConvertor" BrushTrue="LightBlue" BrushFalse="White"/>
+        <local:BoolToBrushConverter x:Key="MarkedConvertor" BrushTrue="Red" BrushFalse="Black"/>
+        <local:BoolToDoubleConverter x:Key="ThicknessConverter" NumberTrue="4" NumberFalse="1"/>
+    </UserControl.Resources>
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button Name="btnLoadNodes" Width="150" Margin="5" Click="btnLoadNodes_Click">Load Nodes</Button>
+            <Button Name="btnFindPath" Width="150" Margin="5" Click="btnFindPath_Click">Calculate Shortest Path</Button>
+        </StackPanel>
+        <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Canvas Name="canvas">
             
-        <ItemsControl ItemsSource="{Binding SelfLoops}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ContentPresenter">
-                    <Setter Property="Canvas.Left" Value="{Binding Position.X}"/>
-                    <Setter Property="Canvas.Top" Value="{Binding Position.Y}"/>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Ellipse Width="50" Height="50"
-                          Stroke="Black" StrokeThickness="1">
-                        <Ellipse.RenderTransform>
-                            <TranslateTransform X="30" Y="30"/>
-                        </Ellipse.RenderTransform>
-                    </Ellipse>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            <ItemsControl ItemsSource="{Binding SelfLoops}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Canvas.Left" Value="{Binding Position.X}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Position.Y}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Ellipse Width="50" Height="50"
+                              Stroke="Black" StrokeThickness="1">
+                            <Ellipse.RenderTransform>
+                                <TranslateTransform X="30" Y="30"/>
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         
-        <ItemsControl ItemsSource="{Binding Edges}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Line X1="{Binding P1.X}" X2="{Binding P2.X}" Y1="{Binding P1.Y}" Y2="{Binding P2.Y}"
-                          Stroke="Black" StrokeThickness="1">
-                        <Line.RenderTransform>
-                            <TranslateTransform X="30" Y="30"/>
-                        </Line.RenderTransform>
-                    </Line>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            <ItemsControl ItemsSource="{Binding Edges}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Line X1="{Binding P1.X}" X2="{Binding P2.X}" Y1="{Binding P1.Y}" Y2="{Binding P2.Y}"
+                              Stroke="{Binding Marked, Converter={StaticResource MarkedConvertor}}" StrokeThickness="{Binding Marked, Converter={StaticResource ThicknessConverter}}">
+                            <Line.RenderTransform>
+                                <TranslateTransform X="30" Y="30"/>
+                            </Line.RenderTransform>
+                        </Line>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         
-        <ItemsControl ItemsSource="{Binding Nodes}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ContentPresenter">
-                    <Setter Property="Canvas.Left" Value="{Binding Position.X}"/>
-                    <Setter Property="Canvas.Top" Value="{Binding Position.Y}"/>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border CornerRadius="60"
-                        Width="60"
-                        Height="60"
-                        Background="White"
-                        BorderBrush="Black"
-                        BorderThickness="1">
-                        <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </Canvas>
-    </ScrollViewer>
+            <ItemsControl ItemsSource="{Binding Nodes}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Canvas.Left" Value="{Binding Position.X}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Position.Y}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border CornerRadius="60"
+                            Width="60"
+                            Height="60"
+                            Background="{Binding Selected,Converter={StaticResource SelectedConvertor}}"
+                            BorderBrush="Black"
+                            BorderThickness="1" 
+                            MouseLeftButtonDown="Node_MouseLeftButtonDown" Tag="{Binding ID}">
+                            <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Canvas>
+        </ScrollViewer>
+    </StackPanel>
 </UserControl>

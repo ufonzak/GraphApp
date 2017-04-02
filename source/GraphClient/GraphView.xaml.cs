@@ -33,6 +33,8 @@ namespace GraphClient
         public ObservableCollection<EdgeModel> Edges { get; private set; } = new ObservableCollection<EdgeModel>();
         public ObservableCollection<SelfLoofModel> SelfLoops { get; private set; } = new ObservableCollection<SelfLoofModel>();
 
+        Dictionary<string, GraphNodeModel> nodeModeIdCache = new Dictionary<string, GraphNodeModel>();
+
         public GraphView()
         {
             InitializeComponent();
@@ -50,7 +52,67 @@ namespace GraphClient
 
         private async void GraphView_Loaded(object sender, RoutedEventArgs e)
         {
+            IsEnabled = false;
             await LoadNodes();
+            IsEnabled = true;
+        }
+
+        private async void btnLoadNodes_Click(object sender, RoutedEventArgs e)
+        {
+            IsEnabled = false;
+            await LoadNodes();
+            IsEnabled = true;
+        }
+
+        private async void btnFindPath_Click(object sender, RoutedEventArgs e)
+        {
+            IsEnabled = false;
+            await FindPath();
+            IsEnabled = true;
+        }
+
+        private async Task FindPath()
+        {
+            if (selectedNodes.Count < 2)
+            {
+                MessageBox.Show("Please select two nodes.");
+                return;
+            }
+
+            var path = await dataProvider.GetShortestPath(selectedNodes[0].ID, selectedNodes[1].ID);
+            if (path == null)
+            {
+                MessageBox.Show("No path found.");
+                return;
+            }
+
+            GraphNodeModel[] nodes;
+            try
+            {
+                nodes = path.Select(nodeId => nodeModeIdCache[nodeId]).ToArray();
+            }
+            catch (KeyNotFoundException)
+            {
+                return;
+            }
+
+            foreach (var edge in Edges)
+            {
+                edge.Marked = false;
+            }
+
+            GraphNodeModel last = nodes[0];
+            foreach(GraphNodeModel model in nodes.Skip(1))
+            {
+                var edge = last.Edges.FirstOrDefault(e => e.Node1 == model || e.Node2 == model);
+                if (edge == null)
+                {
+                    return;
+                }
+
+                edge.Marked = true;
+                last = model;
+            }
         }
 
         private async Task LoadNodes()
@@ -58,23 +120,23 @@ namespace GraphClient
             var nodes = await dataProvider.GetAllNodes();
 
             Nodes.Clear();
+            nodeModeIdCache.Clear();
             Edges.Clear();
             SelfLoops.Clear();
 
-            Dictionary<string, GraphNodeModel> viewsIdCache = new Dictionary<string, GraphNodeModel>();
             foreach (var node in nodes)
             {
                 var nodeView = new GraphNodeModel(node)
                 {
                     Position = new Point(random.NextDouble() * 1000, random.NextDouble() * 1000)
                 };
-                viewsIdCache.Add(node.ID, nodeView);
+                nodeModeIdCache.Add(node.ID, nodeView);
                 Nodes.Add(nodeView);
             }
 
             foreach (var node in nodes)
             {
-                GraphNodeModel view1 = viewsIdCache[node.ID];
+                GraphNodeModel view1 = nodeModeIdCache[node.ID];
 
                 foreach (var adjacentId in node.AdjacentNodeIDs)
                 {
@@ -92,7 +154,7 @@ namespace GraphClient
                     }
 
                     GraphNodeModel view2;
-                    if (!viewsIdCache.TryGetValue(adjacentId, out view2))
+                    if (!nodeModeIdCache.TryGetValue(adjacentId, out view2))
                     {
                         continue;
                     }
@@ -104,12 +166,16 @@ namespace GraphClient
             layoutTimer.Start();
         }
 
+        #region layout
+        //TODO: refactor to class
+
+        private DispatcherTimer layoutTimer;
+
         private void LayoutTimer_Tick(object sender, EventArgs e)
         {
             LayoutNodes();
             OffsetGraph();
         }
-
 
         private const double REPULSION_FORCE = 10000.0;
         private const double ATRACTION_FORCE = 0.1;
@@ -151,9 +217,8 @@ namespace GraphClient
                 layoutTimer.Stop();
             }
         }
+        #endregion
 
-        private DispatcherTimer layoutTimer;
-        
         private void OffsetGraph()
         {
             double minX = double.MaxValue, maxX = double.MinValue, minY = double.MaxValue, maxY = double.MinValue;
@@ -175,7 +240,34 @@ namespace GraphClient
             double height = maxY - minY + 100;
 
             canvas.Width = width;
-            canvas.Height = height; 
+            canvas.Height = height;
+        }
+
+        private void Node_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            string tag = (sender as FrameworkElement).Tag.ToString();
+            GraphNodeModel model = nodeModeIdCache[tag];
+            Select(model);
+        }
+
+        private List<GraphNodeModel> selectedNodes = new List<GraphNodeModel>();
+        private void Select(GraphNodeModel node)
+        {
+            if (node.Selected)
+            {
+                node.Selected = false;
+                selectedNodes.Remove(node);
+                return;
+            }
+
+            node.Selected = true;
+            selectedNodes.Add(node);
+
+            if (selectedNodes.Count > 2)
+            {
+                selectedNodes[0].Selected = false;
+                selectedNodes.RemoveAt(0);
+            }
         }
     }
 }

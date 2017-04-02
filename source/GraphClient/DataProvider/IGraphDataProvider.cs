@@ -10,5 +10,7 @@ namespace GraphClient.DataProvider
     interface IGraphDataProvider
     {
         Task<GraphNode[]> GetAllNodes();
+
+        Task<string[]> GetShortestPath(string nodeFrom, string nodeTo);
     }
 }

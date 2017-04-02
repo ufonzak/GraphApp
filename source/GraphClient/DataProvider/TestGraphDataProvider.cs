@@ -42,5 +42,10 @@ namespace GraphClient.DataProvider
 
             return nodes;
         }
+
+        public async Task<string[]> GetShortestPath(string nodeFrom, string nodeTo)
+        {
+            return new string[] { nodeFrom, nodeTo };
+        }
     }
 }

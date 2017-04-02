@@ -62,6 +62,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bindings.cs" />
+    <Compile Include="BoolToBrushConverter.cs" />
+    <Compile Include="BoolToDoubleConverter.cs" />
     <Compile Include="DataProvider\IGraphDataProvider.cs" />
     <Compile Include="DataProvider\TestGraphDataProvider.cs" />
     <Compile Include="EdgeModel.cs" />

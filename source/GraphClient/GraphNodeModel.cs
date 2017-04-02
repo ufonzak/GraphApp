@@ -27,6 +27,17 @@ namespace GraphClient
         public string Label => node.Label;
         public string ID => node.ID;
 
+        private bool selected;
+        public bool Selected
+        {
+            get { return selected; }
+            set
+            {
+                selected = value;
+                RaisePropertyChanged("Selected");
+            }
+        }
+
         private GraphNode node;
 
         public GraphNodeModel(GraphNode _node)
