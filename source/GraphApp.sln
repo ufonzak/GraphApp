@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "Integra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLoader", "DataLoader\DataLoader.csproj", "{415BBBCE-BF42-4CDF-B0FA-08649CB819A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphServices", "GraphServices\GraphServices.csproj", "{AEFFE6A9-DE09-4E88-9557-3D5EB7D118F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{415BBBCE-BF42-4CDF-B0FA-08649CB819A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{415BBBCE-BF42-4CDF-B0FA-08649CB819A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{415BBBCE-BF42-4CDF-B0FA-08649CB819A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEFFE6A9-DE09-4E88-9557-3D5EB7D118F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEFFE6A9-DE09-4E88-9557-3D5EB7D118F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEFFE6A9-DE09-4E88-9557-3D5EB7D118F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEFFE6A9-DE09-4E88-9557-3D5EB7D118F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

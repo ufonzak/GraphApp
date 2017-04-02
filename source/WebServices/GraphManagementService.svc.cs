@@ -7,38 +7,29 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 using WebServices.DAO;
+using GraphServices;
+using GraphServices.DTO;
 
 namespace WebServices
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class GraphManagementService : IGraphManagementService
     {
+        IGraphNodeDAO GraphNodeDAO => Kernel.Get<IGraphNodeDAO>();
+
         public async Task DeleteAllInvalidGraphNodes()
         {
-            var graphNodeDAO = Kernel.Get<IGraphNodeDAO>();
-
-            await graphNodeDAO.DeleteAllInvalidGraphNodes();
-        }
-
-        public async Task<GraphNode> GetGraphNode(string id)
-        {
-            var graphNodeDAO = Kernel.Get<IGraphNodeDAO>();
-
-            return await graphNodeDAO.GetGraphNode(id);
+            await GraphNodeDAO.DeleteAllInvalidGraphNodes();
         }
 
         public async Task InvalidateAllGraphNodes()
         {
-            var graphNodeDAO = Kernel.Get<IGraphNodeDAO>();
-
-            await graphNodeDAO.InvalidateAllGraphNodes();
+            await GraphNodeDAO.InvalidateAllGraphNodes();
         }
 
         public async Task SyncGraphNode(GraphNode node)
         {
-            var graphNodeDAO = Kernel.Get<IGraphNodeDAO>();
-
-            await graphNodeDAO.SyncGraphNode(node);
+            await GraphNodeDAO.SyncGraphNode(node);
         }
     }
 }

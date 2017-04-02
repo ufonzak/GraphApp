@@ -53,9 +53,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="GraphManagementServiceTest.cs" />
+    <Compile Include="GraphManagementAndDataServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\Services\Reference.cs">
+    <Compile Include="Service References\GraphManagementService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\GraphDataService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -66,37 +71,70 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Service References\Services\GraphManagementService.wsdl" />
-    <None Include="Service References\Services\GraphManagementService.xsd">
+    <None Include="Properties\DataSources\GraphServices.DTO.GraphNode.datasource" />
+    <None Include="Service References\GraphManagementService\GraphManagementService.wsdl" />
+    <None Include="Service References\GraphManagementService\GraphManagementService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Services\GraphManagementService1.xsd">
+    <None Include="Service References\GraphManagementService\GraphManagementService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Services\GraphManagementService2.xsd">
+    <None Include="Service References\GraphManagementService\GraphManagementService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Services\GraphManagementService3.xsd">
+    <None Include="Service References\GraphManagementService\GraphManagementService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Services\IntegrationTests.Services.GraphNode.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
+    <None Include="Service References\GraphDataService\GraphDataService.wsdl" />
+    <None Include="Service References\GraphDataService\GraphDataService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GraphDataService\GraphDataService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GraphDataService\GraphDataService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GraphDataService\GraphDataService3.xsd">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\Services\" />
+    <WCFMetadataStorage Include="Service References\GraphManagementService\" />
+    <WCFMetadataStorage Include="Service References\GraphDataService\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\Services\GraphManagementService.disco" />
+    <None Include="Service References\GraphManagementService\GraphManagementService.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\Services\configuration91.svcinfo" />
+    <None Include="Service References\GraphManagementService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\Services\configuration.svcinfo" />
+    <None Include="Service References\GraphManagementService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\Services\Reference.svcmap">
+    <None Include="Service References\GraphManagementService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphServices\GraphServices.csproj">
+      <Project>{aeffe6a9-de09-4e88-9557-3d5eb7d118f5}</Project>
+      <Name>GraphServices</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GraphDataService\GraphDataService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GraphDataService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GraphDataService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GraphDataService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

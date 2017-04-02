@@ -4,16 +4,10 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:51676/GraphManagementService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:51676/GraphManagementService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:51676/GraphManagementService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WebServices.DAO" />
+      <xsd:import schemaLocation="http://localhost:51676/GraphManagementService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GraphServices.DTO" />
       <xsd:import schemaLocation="http://localhost:51676/GraphManagementService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IGraphManagementService_GetGraphNode_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetGraphNode" />
-  </wsdl:message>
-  <wsdl:message name="IGraphManagementService_GetGraphNode_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetGraphNodeResponse" />
-  </wsdl:message>
   <wsdl:message name="IGraphManagementService_SyncGraphNode_InputMessage">
     <wsdl:part name="parameters" element="tns:SyncGraphNode" />
   </wsdl:message>
@@ -33,10 +27,6 @@
     <wsdl:part name="parameters" element="tns:DeleteAllInvalidGraphNodesResponse" />
   </wsdl:message>
   <wsdl:portType name="IGraphManagementService">
-    <wsdl:operation name="GetGraphNode">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGraphManagementService/GetGraphNode" message="tns:IGraphManagementService_GetGraphNode_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGraphManagementService/GetGraphNodeResponse" message="tns:IGraphManagementService_GetGraphNode_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="SyncGraphNode">
       <wsdl:input wsaw:Action="http://tempuri.org/IGraphManagementService/SyncGraphNode" message="tns:IGraphManagementService_SyncGraphNode_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGraphManagementService/SyncGraphNodeResponse" message="tns:IGraphManagementService_SyncGraphNode_OutputMessage" />
@@ -52,15 +42,6 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IGraphManagementService" type="tns:IGraphManagementService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetGraphNode">
-      <soap:operation soapAction="http://tempuri.org/IGraphManagementService/GetGraphNode" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="SyncGraphNode">
       <soap:operation soapAction="http://tempuri.org/IGraphManagementService/SyncGraphNode" style="document" />
       <wsdl:input>

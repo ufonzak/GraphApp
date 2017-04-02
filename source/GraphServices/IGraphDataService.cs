@@ -3,26 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.ServiceModel.Web;
 using System.Text;
-using WebServices.DAO;
 using System.Threading.Tasks;
+using GraphServices.DTO;
 
-namespace WebServices
+namespace GraphServices
 {
     [ServiceContract]
-    public interface IGraphManagementService
+    public interface IGraphDataService
     {
         [OperationContract]
         Task<GraphNode> GetGraphNode(string id);
 
         [OperationContract]
-        Task SyncGraphNode(GraphNode node);
-
-        [OperationContract]
-        Task InvalidateAllGraphNodes();
-
-        [OperationContract]
-        Task DeleteAllInvalidGraphNodes();
+        Task<GraphNode[]> GetAllGraphNodes();
     }
 }

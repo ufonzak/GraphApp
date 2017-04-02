@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using MongoDB.Driver;
-using MongoDB.Bson;
-using System.Diagnostics;
+using GraphServices.DTO;
 using System.Threading.Tasks;
 
 namespace WebServices.DAO
 {
     public class GraphNodeDAO : IGraphNodeDAO
     {
-        IMongoCollection<GraphNode> Nodes => Kernel.Get<IMongoDatabase>().GetCollection<GraphNode>("graphNodes");
+        IMongoCollection<GraphNodeModel> Nodes => Kernel.Get<IMongoDatabase>().GetCollection<GraphNodeModel>("graphNodes");
 
         public GraphNodeDAO()
         {
@@ -20,23 +19,39 @@ namespace WebServices.DAO
 
         public async Task<GraphNode> GetGraphNode(string id)
         {
-            return await Nodes.Find(Builders<GraphNode>.Filter.Eq("_id", id)).FirstOrDefaultAsync();
+            GraphNodeModel model = await Nodes.Find(Builders<GraphNodeModel>.Filter.Eq("_id", id)).FirstOrDefaultAsync();
+            if (model == null)
+            {
+                return null;
+            }
+
+            return model.ToDTO();
+        }
+
+        public async Task<GraphNode[]> GetAllGraphNodes()
+        {
+            var nodes = await Nodes.Find(Builders<GraphNodeModel>.Filter.Empty).ToListAsync();
+            return nodes.Select(node => node.ToDTO()).ToArray();
         }
 
         public async Task SyncGraphNode(GraphNode node)
         {
-            node.IsValid = true;
-            await Nodes.ReplaceOneAsync(Builders<GraphNode>.Filter.Eq("_id", node.ID), node, new UpdateOptions() { IsUpsert = true });
+            await Nodes.UpdateOneAsync(Builders<GraphNodeModel>.Filter.Eq("_id", node.ID),
+                Builders<GraphNodeModel>.Update
+                    .Set(n => n.Label, node.Label)
+                    .Set(n => n.AdjacentNodeIDs, node.AdjacentNodeIDs)
+                    .Set(n => n.IsValid, true),
+                new UpdateOptions() { IsUpsert = true });
         }
 
         public async Task InvalidateAllGraphNodes()
         {
-            await Nodes.UpdateManyAsync(Builders<GraphNode>.Filter.Empty, Builders<GraphNode>.Update.Set(n => n.IsValid, false));
+            await Nodes.UpdateManyAsync(Builders<GraphNodeModel>.Filter.Empty, Builders<GraphNodeModel>.Update.Set(n => n.IsValid, false));
         }
 
         public async Task DeleteAllInvalidGraphNodes()
         {
-            await Nodes.DeleteManyAsync(Builders<GraphNode>.Filter.Eq(n => n.IsValid, false));
+            await Nodes.DeleteManyAsync(Builders<GraphNodeModel>.Filter.Eq(n => n.IsValid, false));
         }
     }
 }

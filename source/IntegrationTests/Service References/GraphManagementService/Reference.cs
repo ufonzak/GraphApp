@@ -8,97 +8,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataLoader.Services {
-    using System.Runtime.Serialization;
-    using System;
+namespace IntegrationTests.GraphManagementService {
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GraphNode", Namespace="http://schemas.datacontract.org/2004/07/GraphServices.DTO")]
-    [System.SerializableAttribute()]
-    public partial class GraphNode : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] AdjacentNodeIDsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string LabelField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] AdjacentNodeIDs {
-            get {
-                return this.AdjacentNodeIDsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AdjacentNodeIDsField, value) != true)) {
-                    this.AdjacentNodeIDsField = value;
-                    this.RaisePropertyChanged("AdjacentNodeIDs");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ID {
-            get {
-                return this.IDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IDField, value) != true)) {
-                    this.IDField = value;
-                    this.RaisePropertyChanged("ID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Label {
-            get {
-                return this.LabelField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LabelField, value) != true)) {
-                    this.LabelField = value;
-                    this.RaisePropertyChanged("Label");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Services.IGraphManagementService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GraphManagementService.IGraphManagementService")]
     public interface IGraphManagementService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphManagementService/SyncGraphNode", ReplyAction="http://tempuri.org/IGraphManagementService/SyncGraphNodeResponse")]
-        void SyncGraphNode(DataLoader.Services.GraphNode node);
+        void SyncGraphNode(GraphServices.DTO.GraphNode node);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphManagementService/SyncGraphNode", ReplyAction="http://tempuri.org/IGraphManagementService/SyncGraphNodeResponse")]
-        System.Threading.Tasks.Task SyncGraphNodeAsync(DataLoader.Services.GraphNode node);
+        System.Threading.Tasks.Task SyncGraphNodeAsync(GraphServices.DTO.GraphNode node);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphManagementService/InvalidateAllGraphNodes", ReplyAction="http://tempuri.org/IGraphManagementService/InvalidateAllGraphNodesResponse")]
         void InvalidateAllGraphNodes();
@@ -114,12 +35,12 @@ namespace DataLoader.Services {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IGraphManagementServiceChannel : DataLoader.Services.IGraphManagementService, System.ServiceModel.IClientChannel {
+    public interface IGraphManagementServiceChannel : IntegrationTests.GraphManagementService.IGraphManagementService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GraphManagementServiceClient : System.ServiceModel.ClientBase<DataLoader.Services.IGraphManagementService>, DataLoader.Services.IGraphManagementService {
+    public partial class GraphManagementServiceClient : System.ServiceModel.ClientBase<IntegrationTests.GraphManagementService.IGraphManagementService>, IntegrationTests.GraphManagementService.IGraphManagementService {
         
         public GraphManagementServiceClient() {
         }
@@ -140,11 +61,11 @@ namespace DataLoader.Services {
                 base(binding, remoteAddress) {
         }
         
-        public void SyncGraphNode(DataLoader.Services.GraphNode node) {
+        public void SyncGraphNode(GraphServices.DTO.GraphNode node) {
             base.Channel.SyncGraphNode(node);
         }
         
-        public System.Threading.Tasks.Task SyncGraphNodeAsync(DataLoader.Services.GraphNode node) {
+        public System.Threading.Tasks.Task SyncGraphNodeAsync(GraphServices.DTO.GraphNode node) {
             return base.Channel.SyncGraphNodeAsync(node);
         }
         
