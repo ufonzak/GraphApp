@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using WebServices.Algorithms;
 
 namespace WebServices
 {
@@ -13,7 +14,8 @@ namespace WebServices
     {
         public async Task<string[]> GetShortestPath(string nodeIdFrom, string nodeIdTo)
         {
-            throw new NotImplementedException();
+            IShortestPath shortestPath = Kernel.Get<IShortestPath>();
+            return await shortestPath.GetShortestPath(nodeIdFrom, nodeIdTo);
         }
     }
 }

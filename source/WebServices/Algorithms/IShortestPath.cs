@@ -10,4 +10,12 @@ namespace WebServices.Algorithms
     {
         Task<string[]> GetShortestPath(string nodeIdFrom, string nodeIdTo);
     }
+
+    public class ShortestPathException : Exception
+    {
+        public ShortestPathException(string message) : base (message)
+        {
+
+        }
+    }
 }

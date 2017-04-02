@@ -27,7 +27,8 @@ namespace UnitTests
             kernel.Bind<IShortestPath>().To<BfsShortestPath>();
 
             Mock<IGraphNodeDAO> graphDao = new Mock<IGraphNodeDAO>();
-            graphDao.Setup(dao => dao.GetGraphNode(It.IsAny<string>())).Returns<string>(id => {
+            graphDao.Setup(dao => dao.GetGraphNode(It.IsAny<string>())).Returns<string>(id =>
+            {
                 GraphNode node;
                 nodeStorage.TryGetValue(id, out node);
                 return Task.FromResult(node);
@@ -64,6 +65,100 @@ namespace UnitTests
             var path = await shortestPath.GetShortestPath("n1", "n3");
 
             Assert.IsTrue(Enumerable.SequenceEqual(path, new string[] { "n1", "n2", "n3" }));
+        }
+
+
+        [TestMethod]
+        public async Task ReturnsNullForNonExistingPath()
+        {
+            nodeStorage = new GraphNode[] {
+                new GraphNode
+                {
+                     ID = "n1",
+                     AdjacentNodeIDs = new List<string> { "n1" }
+                }, new GraphNode
+                {
+                     ID = "n2",
+                     AdjacentNodeIDs = new List<string> { "n2" }
+                }
+            }.ToDictionary(node => node.ID);
+
+            var path = await shortestPath.GetShortestPath("n1", "n2");
+
+            Assert.IsNull(path);
+        }
+
+
+        [TestMethod]
+        public async Task ReturnsPathForSelfLoop()
+        {
+            nodeStorage = new GraphNode[] {
+                new GraphNode
+                {
+                     ID = "n1",
+                     AdjacentNodeIDs = new List<string> { "n1" }
+                }
+            }.ToDictionary(node => node.ID);
+
+            var path = await shortestPath.GetShortestPath("n1", "n1");
+
+            Assert.IsTrue(Enumerable.SequenceEqual(path, new string[] { "n1", "n1" }));
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ShortestPathException))]
+        public async Task ThrowsExceptionForNonExistingNodes()
+        {
+            nodeStorage = new GraphNode[] {
+                new GraphNode
+                {
+                     ID = "n1",
+                     AdjacentNodeIDs = new List<string> { "n1", "n2" }
+                }
+            }.ToDictionary(node => node.ID);
+
+            await shortestPath.GetShortestPath("n1", "n2");
+        }
+
+        [TestMethod]
+        public async Task FindsPathInComplexScenario()
+        {
+            nodeStorage = new GraphNode[] {
+                new GraphNode
+                {
+                     ID = "n1",
+                     AdjacentNodeIDs = new List<string> { "n4", "n1" }
+                }, new GraphNode
+                {
+                     ID = "n2",
+                     AdjacentNodeIDs = new List<string> { "n4", "n3", "n5" }
+                },new GraphNode
+                {
+                     ID = "n3",
+                     AdjacentNodeIDs = new List<string> { "n2", "n5", "n3" }
+                },new GraphNode
+                {
+                     ID = "n4",
+                     AdjacentNodeIDs = new List<string> { "n2", "n5", "n6", "n1" }
+                },new GraphNode
+                {
+                     ID = "n5",
+                     AdjacentNodeIDs = new List<string> { "n2", "n3", "n4", "n6", "n7" }
+                },new GraphNode
+                {
+                     ID = "n6",
+                     AdjacentNodeIDs = new List<string> { "n4", "n5" }
+                },new GraphNode
+                {
+                     ID = "n7",
+                     AdjacentNodeIDs = new List<string> { "n7", "n5" }
+                }
+            }.ToDictionary(node => node.ID);
+
+            var path = await shortestPath.GetShortestPath("n1", "n7");
+
+            Assert.IsTrue(Enumerable.SequenceEqual(path, new string[] { "n1", "n4", "n5", "n7" }));
         }
     }
 }
