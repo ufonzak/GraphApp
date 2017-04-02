@@ -27,6 +27,11 @@ namespace WebServices
             await GraphNodeDAO.InvalidateAllGraphNodes();
         }
 
+        public async Task NormalizeRelations()
+        {
+            await GraphNodeDAO.NormalizeRelations();
+        }
+
         public async Task SyncGraphNode(GraphNode node)
         {
             await GraphNodeDAO.SyncGraphNode(node);

@@ -20,5 +20,8 @@ namespace GraphServices
 
         [OperationContract]
         Task DeleteAllInvalidGraphNodes();
+
+        [OperationContract]
+        Task NormalizeRelations();
     }
 }

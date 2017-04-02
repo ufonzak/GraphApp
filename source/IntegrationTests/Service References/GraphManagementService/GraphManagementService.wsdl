@@ -26,6 +26,12 @@
   <wsdl:message name="IGraphManagementService_DeleteAllInvalidGraphNodes_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteAllInvalidGraphNodesResponse" />
   </wsdl:message>
+  <wsdl:message name="IGraphManagementService_NormalizeRelations_InputMessage">
+    <wsdl:part name="parameters" element="tns:NormalizeRelations" />
+  </wsdl:message>
+  <wsdl:message name="IGraphManagementService_NormalizeRelations_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NormalizeRelationsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IGraphManagementService">
     <wsdl:operation name="SyncGraphNode">
       <wsdl:input wsaw:Action="http://tempuri.org/IGraphManagementService/SyncGraphNode" message="tns:IGraphManagementService_SyncGraphNode_InputMessage" />
@@ -38,6 +44,10 @@
     <wsdl:operation name="DeleteAllInvalidGraphNodes">
       <wsdl:input wsaw:Action="http://tempuri.org/IGraphManagementService/DeleteAllInvalidGraphNodes" message="tns:IGraphManagementService_DeleteAllInvalidGraphNodes_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGraphManagementService/DeleteAllInvalidGraphNodesResponse" message="tns:IGraphManagementService_DeleteAllInvalidGraphNodes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NormalizeRelations">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGraphManagementService/NormalizeRelations" message="tns:IGraphManagementService_NormalizeRelations_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGraphManagementService/NormalizeRelationsResponse" message="tns:IGraphManagementService_NormalizeRelations_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IGraphManagementService" type="tns:IGraphManagementService">
@@ -62,6 +72,15 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteAllInvalidGraphNodes">
       <soap:operation soapAction="http://tempuri.org/IGraphManagementService/DeleteAllInvalidGraphNodes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NormalizeRelations">
+      <soap:operation soapAction="http://tempuri.org/IGraphManagementService/NormalizeRelations" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

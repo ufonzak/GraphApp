@@ -131,6 +131,38 @@ namespace IntegrationTests
             graphManagement.DeleteAllInvalidGraphNodes();
         }
 
+        [TestMethod]
+        public void NormalizesNodeRelations()
+        {
+            var graphNodes = new GraphNode[] {
+                new GraphNode()
+                {
+                    ID = "xxx4",
+                    Label = "XXX4",
+                    AdjacentNodeIDs = new List<string> { "xxx5" }
+                }, new GraphNode()
+                {
+                    ID = "xxx5",
+                    Label = "XXX5",
+                    AdjacentNodeIDs = new List<string> { }
+                }, new GraphNode()
+                {
+                    ID = "xxx6",
+                    Label = "XXX6",
+                    AdjacentNodeIDs = new List<string> { "xxx5" }
+                }
+            };
+            foreach (var node in graphNodes)
+            {
+                graphManagement.SyncGraphNode(node);
+            }
+
+            graphManagement.NormalizeRelations();
+
+            var updatedNode = graphData.GetGraphNode("xxx5");
+            Assert.IsTrue(Enumerable.SequenceEqual(updatedNode.AdjacentNodeIDs.OrderBy(id => id), new string[] { "xxx4", "xxx6" }));
+        }
+
 
         static bool DeepEqual(GraphNode node1, GraphNode node2)
         {

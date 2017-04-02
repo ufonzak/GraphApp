@@ -111,6 +111,12 @@ namespace DataLoader.Services {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphManagementService/DeleteAllInvalidGraphNodes", ReplyAction="http://tempuri.org/IGraphManagementService/DeleteAllInvalidGraphNodesResponse")]
         System.Threading.Tasks.Task DeleteAllInvalidGraphNodesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphManagementService/NormalizeRelations", ReplyAction="http://tempuri.org/IGraphManagementService/NormalizeRelationsResponse")]
+        void NormalizeRelations();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphManagementService/NormalizeRelations", ReplyAction="http://tempuri.org/IGraphManagementService/NormalizeRelationsResponse")]
+        System.Threading.Tasks.Task NormalizeRelationsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -162,6 +168,14 @@ namespace DataLoader.Services {
         
         public System.Threading.Tasks.Task DeleteAllInvalidGraphNodesAsync() {
             return base.Channel.DeleteAllInvalidGraphNodesAsync();
+        }
+        
+        public void NormalizeRelations() {
+            base.Channel.NormalizeRelations();
+        }
+        
+        public System.Threading.Tasks.Task NormalizeRelationsAsync() {
+            return base.Channel.NormalizeRelationsAsync();
         }
     }
 }

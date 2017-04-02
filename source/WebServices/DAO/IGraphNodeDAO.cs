@@ -18,5 +18,7 @@ namespace WebServices.DAO
         Task InvalidateAllGraphNodes();
 
         Task DeleteAllInvalidGraphNodes();
+
+        Task NormalizeRelations();
     }
 }

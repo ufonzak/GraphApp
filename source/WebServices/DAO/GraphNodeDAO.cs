@@ -53,5 +53,20 @@ namespace WebServices.DAO
         {
             await Nodes.DeleteManyAsync(Builders<GraphNodeModel>.Filter.Eq(n => n.IsValid, false));
         }
+
+        public async Task NormalizeRelations()
+        {
+            var cursor = await Nodes.Find(Builders<GraphNodeModel>.Filter.Empty).ToCursorAsync();
+            await cursor.ForEachAsync(async node =>
+            {
+                if (node.AdjacentNodeIDs == null || node.AdjacentNodeIDs.Count == 0)
+                {
+                    return;
+                }
+                await Nodes.UpdateManyAsync(
+                    Builders<GraphNodeModel>.Filter.In("_id", node.AdjacentNodeIDs),
+                    Builders<GraphNodeModel>.Update.AddToSet(n => n.AdjacentNodeIDs, node.ID));
+            });
+        }
     }
 }

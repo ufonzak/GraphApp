@@ -52,6 +52,9 @@ namespace DataLoader
                 Console.WriteLine("Deleting invalid nodes.");
                 client.DeleteAllInvalidGraphNodes();
 
+                Console.WriteLine("Normalizing relations.");
+                client.NormalizeRelations();
+
                 client.Close();
 
                 Console.WriteLine("Synchronization sucessfuly completed");
