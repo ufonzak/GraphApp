@@ -111,7 +111,7 @@ namespace GraphClient
         }
 
 
-        private const double REPULSION_FORCE = 3000.0;
+        private const double REPULSION_FORCE = 10000.0;
         private const double ATRACTION_FORCE = 0.1;
         private const double DAMPING_COEF = 0.85;
 
@@ -128,7 +128,7 @@ namespace GraphClient
                     var difference = node1.Position.Minus(node2.Position);
                     var distance = difference.Size();
 
-                    force = force.Plus(difference.Multi(REPULSION_FORCE / Math.Pow(distance, 2.0)));
+                    force = force.Plus(difference.Multi(REPULSION_FORCE / Math.Pow(distance, 2.0) / Nodes.Count));
                 }
 
                 foreach (var edge in node1.Edges)
@@ -139,7 +139,7 @@ namespace GraphClient
                         difference = difference.Multi(-1);
                     }
 
-                    force = force.Plus(difference.Multi(ATRACTION_FORCE));
+                    force = force.Plus(difference.Multi(ATRACTION_FORCE / node1.Edges.Count));
                 }
 
                 node1.Position = node1.Position.Plus(force.Multi(DAMPING_COEF));
