@@ -6,7 +6,32 @@
              xmlns:local="clr-namespace:GraphClient"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Canvas>
+    <Canvas Name="canvas">
+
+        <ItemsControl ItemsSource="{Binding SelfLoops}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding Position.X}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding Position.Y}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Ellipse Width="50" Height="50"
+                          Stroke="Black" StrokeThickness="1">
+                        <Ellipse.RenderTransform>
+                            <TranslateTransform X="30" Y="30"/>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
         <ItemsControl ItemsSource="{Binding Edges}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

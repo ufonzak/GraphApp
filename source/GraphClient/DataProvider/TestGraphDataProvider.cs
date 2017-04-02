@@ -16,7 +16,7 @@ namespace GraphClient.DataProvider
         {
             await Task.Delay(1000);
 
-            Random rand = new Random(12345);
+            Random rand = new Random();
 
             var nodes = Enumerable.Range(1, NODE_COUNT).Select(id => new GraphNode
             {
