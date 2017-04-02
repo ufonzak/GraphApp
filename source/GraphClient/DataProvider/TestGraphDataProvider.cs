@@ -47,5 +47,10 @@ namespace GraphClient.DataProvider
         {
             return new string[] { nodeFrom, nodeTo };
         }
+
+        public async Task<string[][]> GetGraphComponents()
+        {
+            return new string[][] { };
+        }
     }
 }

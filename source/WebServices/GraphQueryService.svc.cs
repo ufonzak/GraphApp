@@ -12,6 +12,12 @@ namespace WebServices
 {
     public class GraphQueryService : IGraphQueryService
     {
+        public async Task<string[][]> GetGraphComponents()
+        {
+            IGraphComponents components = Kernel.Get<IGraphComponents>();
+            return await components.GetGraphComponents();
+        }
+
         public async Task<string[]> GetShortestPath(string nodeIdFrom, string nodeIdTo)
         {
             IShortestPath shortestPath = Kernel.Get<IShortestPath>();

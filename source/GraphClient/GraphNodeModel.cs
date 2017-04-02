@@ -27,6 +27,8 @@ namespace GraphClient
         public string Label => node.Label;
         public string ID => node.ID;
 
+        public string Component { get; set; }
+
         private bool selected;
         public bool Selected
         {

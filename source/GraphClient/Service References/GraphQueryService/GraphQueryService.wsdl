@@ -13,16 +13,35 @@
   <wsdl:message name="IGraphQueryService_GetShortestPath_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetShortestPathResponse" />
   </wsdl:message>
+  <wsdl:message name="IGraphQueryService_GetGraphComponents_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetGraphComponents" />
+  </wsdl:message>
+  <wsdl:message name="IGraphQueryService_GetGraphComponents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetGraphComponentsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IGraphQueryService">
     <wsdl:operation name="GetShortestPath">
       <wsdl:input wsaw:Action="http://tempuri.org/IGraphQueryService/GetShortestPath" message="tns:IGraphQueryService_GetShortestPath_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGraphQueryService/GetShortestPathResponse" message="tns:IGraphQueryService_GetShortestPath_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGraphComponents">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGraphQueryService/GetGraphComponents" message="tns:IGraphQueryService_GetGraphComponents_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGraphQueryService/GetGraphComponentsResponse" message="tns:IGraphQueryService_GetGraphComponents_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IGraphQueryService" type="tns:IGraphQueryService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetShortestPath">
       <soap:operation soapAction="http://tempuri.org/IGraphQueryService/GetShortestPath" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGraphComponents">
+      <soap:operation soapAction="http://tempuri.org/IGraphQueryService/GetGraphComponents" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

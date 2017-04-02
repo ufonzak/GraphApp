@@ -18,6 +18,7 @@ namespace WebServices
                 return client.GetDatabase(ConfigurationManager.AppSettings["mongodbDatabaseName"]);
             }).InSingletonScope();
             Bind<Algorithms.IShortestPath>().To<Algorithms.BfsShortestPath>();
+            Bind<Algorithms.IGraphComponents>().To<Algorithms.DfsGraphComponents>();
         }
     }
 }

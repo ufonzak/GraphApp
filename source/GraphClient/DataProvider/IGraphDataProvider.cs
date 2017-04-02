@@ -12,5 +12,6 @@ namespace GraphClient.DataProvider
         Task<GraphNode[]> GetAllNodes();
 
         Task<string[]> GetShortestPath(string nodeFrom, string nodeTo);
+        Task<string[][]> GetGraphComponents();
     }
 }

@@ -118,6 +118,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\BfsShortestPath.cs" />
+    <Compile Include="Algorithms\DfsGraphComponents.cs" />
+    <Compile Include="Algorithms\IGraphComponents.cs" />
     <Compile Include="Algorithms\IShortestPath.cs" />
     <Compile Include="Bindings.cs" />
     <Compile Include="DAO\GraphNode.cs" />

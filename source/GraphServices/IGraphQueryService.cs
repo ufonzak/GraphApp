@@ -12,5 +12,8 @@ namespace GraphServices
     {
         [OperationContract]
         Task<string[]> GetShortestPath(string nodeIdFrom, string nodeIdTo);
+
+        [OperationContract]
+        Task<string[][]> GetGraphComponents();
     }
 }

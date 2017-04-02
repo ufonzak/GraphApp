@@ -123,6 +123,7 @@ namespace GraphClient
         private async Task LoadNodes()
         {
             var nodes = await dataProvider.GetAllNodes();
+            var components = await dataProvider.GetGraphComponents();
 
             Nodes.Clear();
             nodeModeIdCache.Clear();
@@ -169,6 +170,14 @@ namespace GraphClient
                 }
             }
 
+            foreach(var component in components)
+            {
+                foreach(var nodeId in component)
+                {
+                    nodeModeIdCache[nodeId].Component = component[0];
+                }
+            }
+
             layoutTimer.Start();
         }
 
@@ -195,7 +204,7 @@ namespace GraphClient
             {
                 Point force = new Point(0, 0);
 
-                foreach (var node2 in Nodes.Where(node => node != node1))
+                foreach (var node2 in Nodes.Where(node => node != node1 && node.Component == node1.Component))
                 {
                     var difference = node1.Position.Minus(node2.Position);
                     var distance = difference.Size();

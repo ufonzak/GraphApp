@@ -24,6 +24,19 @@ namespace GraphClient.DataProvider
             }
         }
 
+        public async Task<string[][]> GetGraphComponents()
+        {
+            var client = Kernel.Get<GraphQueryServiceClient>();
+            try
+            {
+                return await client.GetGraphComponentsAsync();
+            }
+            finally
+            {
+                client.Close();
+            }
+        }
+
         public async Task<string[]> GetShortestPath(string nodeFrom, string nodeTo)
         {
             var client = Kernel.Get<GraphQueryServiceClient>();

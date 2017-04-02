@@ -20,6 +20,12 @@ namespace GraphClient.GraphQueryService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphQueryService/GetShortestPath", ReplyAction="http://tempuri.org/IGraphQueryService/GetShortestPathResponse")]
         System.Threading.Tasks.Task<string[]> GetShortestPathAsync(string nodeIdFrom, string nodeIdTo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphQueryService/GetGraphComponents", ReplyAction="http://tempuri.org/IGraphQueryService/GetGraphComponentsResponse")]
+        string[][] GetGraphComponents();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGraphQueryService/GetGraphComponents", ReplyAction="http://tempuri.org/IGraphQueryService/GetGraphComponentsResponse")]
+        System.Threading.Tasks.Task<string[][]> GetGraphComponentsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -55,6 +61,14 @@ namespace GraphClient.GraphQueryService {
         
         public System.Threading.Tasks.Task<string[]> GetShortestPathAsync(string nodeIdFrom, string nodeIdTo) {
             return base.Channel.GetShortestPathAsync(nodeIdFrom, nodeIdTo);
+        }
+        
+        public string[][] GetGraphComponents() {
+            return base.Channel.GetGraphComponents();
+        }
+        
+        public System.Threading.Tasks.Task<string[][]> GetGraphComponentsAsync() {
+            return base.Channel.GetGraphComponentsAsync();
         }
     }
 }
