@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b5a33454-5f3e-4e99-82a6-491a0a0132f6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:51676/GraphManagementService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="GraphManagementService.xsd" MetadataType="Schema" ID="adf04638-000e-4ac4-814c-c01876835917" SourceId="1" SourceUrl="http://localhost:51676/GraphManagementService.svc?xsd=xsd2" />
+    <MetadataFile FileName="GraphManagementService1.xsd" MetadataType="Schema" ID="37a1bdab-c5bb-4fc1-8e37-4d0329a84409" SourceId="1" SourceUrl="http://localhost:51676/GraphManagementService.svc?xsd=xsd3" />
+    <MetadataFile FileName="GraphManagementService.disco" MetadataType="Disco" ID="ca0fb7cd-ff9c-4531-9a00-61e3c408b07c" SourceId="1" SourceUrl="http://localhost:51676/GraphManagementService.svc?disco" />
+    <MetadataFile FileName="GraphManagementService.wsdl" MetadataType="Wsdl" ID="d243432c-2f51-4c1f-aab6-55c9fd21d7f5" SourceId="1" SourceUrl="http://localhost:51676/GraphManagementService.svc?wsdl" />
+    <MetadataFile FileName="GraphManagementService2.xsd" MetadataType="Schema" ID="17376ecd-60f3-4dd2-b8c4-4ed535012177" SourceId="1" SourceUrl="http://localhost:51676/GraphManagementService.svc?xsd=xsd0" />
+    <MetadataFile FileName="GraphManagementService3.xsd" MetadataType="Schema" ID="64dbd657-c663-4a9e-bf90-d4167564636c" SourceId="1" SourceUrl="http://localhost:51676/GraphManagementService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

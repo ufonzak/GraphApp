@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "Integra
 		{979D535A-7426-494F-80EE-1A159A3DDAD7} = {979D535A-7426-494F-80EE-1A159A3DDAD7}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLoader", "DataLoader\DataLoader.csproj", "{415BBBCE-BF42-4CDF-B0FA-08649CB819A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{C6DF5191-174B-4E69-BEC1-005C37A13960}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6DF5191-174B-4E69-BEC1-005C37A13960}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6DF5191-174B-4E69-BEC1-005C37A13960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{415BBBCE-BF42-4CDF-B0FA-08649CB819A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{415BBBCE-BF42-4CDF-B0FA-08649CB819A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{415BBBCE-BF42-4CDF-B0FA-08649CB819A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{415BBBCE-BF42-4CDF-B0FA-08649CB819A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
