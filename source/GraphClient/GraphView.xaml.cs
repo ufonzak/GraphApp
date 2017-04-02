@@ -126,6 +126,7 @@ namespace GraphClient
 
             Nodes.Clear();
             nodeModeIdCache.Clear();
+            selectedNodes.Clear();
             Edges.Clear();
             SelfLoops.Clear();
 
@@ -184,7 +185,7 @@ namespace GraphClient
 
         private const double REPULSION_FORCE = 10000.0;
         private const double ATRACTION_FORCE = 0.1;
-        private const double DAMPING_COEF = 0.85;
+        private const double DAMPING_COEF = 0.95;
 
         private void LayoutNodes()
         {
@@ -217,7 +218,7 @@ namespace GraphClient
                 maxForce = Math.Max(maxForce, force.Size());
             }
 
-            if (maxForce < 0.1)
+            if (maxForce < 2)
             {
                 layoutTimer.Stop();
             }
