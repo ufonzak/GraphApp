@@ -6,8 +6,9 @@
              xmlns:local="clr-namespace:GraphClient"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Canvas Name="canvas">
-
+    <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Canvas Name="canvas">
+            
         <ItemsControl ItemsSource="{Binding SelfLoops}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -76,4 +77,5 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
     </Canvas>
+    </ScrollViewer>
 </UserControl>

@@ -16,7 +16,7 @@ using GraphClient.DataProvider;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using GraphServices.DTO;
-using System.Timers;
+using System.Windows.Threading;
 
 namespace GraphClient
 {
@@ -43,9 +43,9 @@ namespace GraphClient
 
             DataContext = this;
 
-            layoutTimer = new Timer();
-            layoutTimer.Interval = 100;
-            layoutTimer.Elapsed += LayoutTimer_Elapsed;
+            layoutTimer = new DispatcherTimer();
+            layoutTimer.Interval = TimeSpan.FromMilliseconds(100);
+            layoutTimer.Tick += LayoutTimer_Tick;
         }
 
         private async void GraphView_Loaded(object sender, RoutedEventArgs e)
@@ -104,6 +104,12 @@ namespace GraphClient
             layoutTimer.Start();
         }
 
+        private void LayoutTimer_Tick(object sender, EventArgs e)
+        {
+            LayoutNodes();
+            OffsetGraph();
+        }
+
 
         private const double REPULSION_FORCE = 3000.0;
         private const double ATRACTION_FORCE = 0.1;
@@ -146,14 +152,8 @@ namespace GraphClient
             }
         }
 
-        private Timer layoutTimer;
-
-        private void LayoutTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            LayoutNodes();
-            OffsetGraph();
-        }
-
+        private DispatcherTimer layoutTimer;
+        
         private void OffsetGraph()
         {
             double minX = double.MaxValue, maxX = double.MinValue, minY = double.MaxValue, maxY = double.MinValue;
@@ -170,6 +170,12 @@ namespace GraphClient
             {
                 node.Position = node.Position.Minus(new Point(minX, minY));
             }
+
+            double width = maxX - minX + 100;
+            double height = maxY - minY + 100;
+
+            canvas.Width = width;
+            canvas.Height = height; 
         }
     }
 }
