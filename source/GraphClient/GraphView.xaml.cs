@@ -39,6 +39,11 @@ namespace GraphClient
         {
             InitializeComponent();
 
+            if (DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
+
             dataProvider = Kernel.Get<IGraphDataProvider>();
 
             Loaded += GraphView_Loaded;

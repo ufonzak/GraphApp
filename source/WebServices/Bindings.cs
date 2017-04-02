@@ -17,6 +17,7 @@ namespace WebServices
                 IMongoClient client = p.Kernel.GetService(typeof(IMongoClient)) as IMongoClient;
                 return client.GetDatabase(ConfigurationManager.AppSettings["mongodbDatabaseName"]);
             }).InSingletonScope();
+            Bind<Algorithms.IShortestPath>().To<Algorithms.BfsShortestPath>();
         }
     }
 }

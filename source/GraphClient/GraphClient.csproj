@@ -66,6 +66,7 @@
     <Compile Include="BoolToDoubleConverter.cs" />
     <Compile Include="DataProvider\IGraphDataProvider.cs" />
     <Compile Include="DataProvider\TestGraphDataProvider.cs" />
+    <Compile Include="DataProvider\WebServiceProvider.cs" />
     <Compile Include="EdgeModel.cs" />
     <Compile Include="GraphNodeModel.cs" />
     <Compile Include="GraphView.xaml.cs">
@@ -76,6 +77,11 @@
     <Compile Include="PointExtension.cs" />
     <Compile Include="SelfLoopModel.cs" />
     <Compile Include="Service References\GraphDataService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\GraphQueryService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -135,6 +141,16 @@
     <None Include="Service References\GraphDataService\GraphDataService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\GraphQueryService\GraphQueryService.wsdl" />
+    <None Include="Service References\GraphQueryService\GraphQueryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GraphQueryService\GraphQueryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GraphQueryService\GraphQueryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -150,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\GraphDataService\" />
+    <WCFMetadataStorage Include="Service References\GraphQueryService\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\GraphDataService\GraphDataService.disco" />
@@ -166,7 +183,21 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Service References\GraphQueryService\GraphQueryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GraphQueryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GraphQueryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GraphQueryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

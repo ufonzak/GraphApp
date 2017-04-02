@@ -25,7 +25,7 @@ namespace WebServices.DAO
             {
                 ID = ID,
                 Label = Label,
-                AdjacentNodeIDs = AdjacentNodeIDs?.ToList()
+                AdjacentNodeIDs = AdjacentNodeIDs != null ? AdjacentNodeIDs.ToList() : new List<string>()
             };
         }
     }
