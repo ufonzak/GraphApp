@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="WebServices.GraphQueryService" CodeBehind="GraphQueryService.svc.cs" %>

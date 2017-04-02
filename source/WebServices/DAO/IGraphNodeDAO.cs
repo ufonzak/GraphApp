@@ -7,7 +7,7 @@ using GraphServices.DTO;
 
 namespace WebServices.DAO
 {
-    interface IGraphNodeDAO
+    public interface IGraphNodeDAO
     {
         Task SyncGraphNode(GraphNode node);
 

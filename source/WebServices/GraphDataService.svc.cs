@@ -11,6 +11,7 @@ using GraphServices.DTO;
 
 namespace WebServices
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class GraphDataService : IGraphDataService
     {
         IGraphNodeDAO GraphNodeDAO => Kernel.Get<IGraphNodeDAO>();

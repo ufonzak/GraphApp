@@ -110,12 +110,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GraphDataService.svc" />
+    <Content Include="GraphQueryService.svc" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
     <Content Include="scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="GraphManagementService.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\BfsShortestPath.cs" />
+    <Compile Include="Algorithms\IShortestPath.cs" />
     <Compile Include="Bindings.cs" />
     <Compile Include="DAO\GraphNode.cs" />
     <Compile Include="DAO\GraphNodeDAO.cs" />
@@ -125,6 +128,9 @@
     </Compile>
     <Compile Include="GraphManagementService.svc.cs">
       <DependentUpon>GraphManagementService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="GraphQueryService.svc.cs">
+      <DependentUpon>GraphQueryService.svc</DependentUpon>
     </Compile>
     <Compile Include="Kernel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

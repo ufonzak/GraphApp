@@ -45,6 +45,7 @@
     <Compile Include="DTO\GraphNode.cs" />
     <Compile Include="IGraphDataService.cs" />
     <Compile Include="IGraphManagementService.cs" />
+    <Compile Include="IGraphOperationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
