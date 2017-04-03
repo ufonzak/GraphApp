@@ -62,20 +62,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bindings.cs" />
-    <Compile Include="BoolToBrushConverter.cs" />
-    <Compile Include="BoolToDoubleConverter.cs" />
+    <Compile Include="Converters\BoolToBrushConverter.cs" />
+    <Compile Include="Converters\BoolToDoubleConverter.cs" />
     <Compile Include="DataProvider\IGraphDataProvider.cs" />
     <Compile Include="DataProvider\TestGraphDataProvider.cs" />
     <Compile Include="DataProvider\WebServiceProvider.cs" />
-    <Compile Include="EdgeModel.cs" />
-    <Compile Include="GraphNodeModel.cs" />
+    <Compile Include="Models\EdgeModel.cs" />
+    <Compile Include="Models\GraphNodeModel.cs" />
     <Compile Include="GraphView.xaml.cs">
       <DependentUpon>GraphView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Kernel.cs" />
-    <Compile Include="ModelBase.cs" />
-    <Compile Include="PointExtension.cs" />
-    <Compile Include="SelfLoopModel.cs" />
+    <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Utils\PointExtension.cs" />
+    <Compile Include="Models\SelfLoopModel.cs" />
     <Compile Include="Service References\GraphDataService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
