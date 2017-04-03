@@ -64,12 +64,13 @@ namespace GraphClient
 
         private async void btnFindPath_Click(object sender, RoutedEventArgs e)
         {
-            IsEnabled = false;
             if (selectedNodes.Count < 2)
             {
                 MessageBox.Show("Please select two nodes.");
                 return;
             }
+
+            IsEnabled = false;
 
             await dataContext.FindPath(selectedNodes[0], selectedNodes[1]);
 
