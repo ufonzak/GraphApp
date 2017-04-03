@@ -28,36 +28,35 @@ namespace DataLoader
 
             try
             {
-                Services.GraphManagementServiceClient client = new Services.GraphManagementServiceClient();
-
-                Console.WriteLine("Invalidating graph nodes.");
-                client.InvalidateAllGraphNodes();
-
-                DirectoryInfo directoryInfo = new DirectoryInfo(directoryPath);
-                foreach (FileInfo file in directoryInfo.GetFiles("*.xml"))
+                using (Services.GraphManagementServiceClient client = new Services.GraphManagementServiceClient())
                 {
-                    using (TextReader reader = new StreamReader(file.FullName))
+                    Console.WriteLine("Invalidating graph nodes.");
+                    client.InvalidateAllGraphNodes();
+
+                    DirectoryInfo directoryInfo = new DirectoryInfo(directoryPath);
+                    foreach (FileInfo file in directoryInfo.GetFiles("*.xml"))
                     {
-                        GraphNodeData node = serializer.Deserialize(reader) as GraphNodeData;
-                        client.SyncGraphNode(new Services.GraphNode()
+                        using (TextReader reader = new StreamReader(file.FullName))
                         {
-                            ID = node.ID,
-                            Label = node.Label,
-                            AdjacentNodeIDs = node.AdjacentNodes
-                        });
-                        Console.WriteLine($"Node {node.ID} imported.");
+                            GraphNodeData node = serializer.Deserialize(reader) as GraphNodeData;
+                            client.SyncGraphNode(new Services.GraphNode()
+                            {
+                                ID = node.ID,
+                                Label = node.Label,
+                                AdjacentNodeIDs = node.AdjacentNodes
+                            });
+                            Console.WriteLine($"Node {node.ID} imported.");
+                        }
                     }
+
+                    Console.WriteLine("Deleting invalid nodes.");
+                    client.DeleteAllInvalidGraphNodes();
+
+                    Console.WriteLine("Normalizing relations.");
+                    client.NormalizeRelations();
+
+                    Console.WriteLine("Synchronization sucessfuly completed");
                 }
-
-                Console.WriteLine("Deleting invalid nodes.");
-                client.DeleteAllInvalidGraphNodes();
-
-                Console.WriteLine("Normalizing relations.");
-                client.NormalizeRelations();
-
-                client.Close();
-
-                Console.WriteLine("Synchronization sucessfuly completed");
             }
             catch (Exception er)
             {

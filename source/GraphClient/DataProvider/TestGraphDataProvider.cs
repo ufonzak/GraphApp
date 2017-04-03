@@ -45,14 +45,14 @@ namespace GraphClient.DataProvider
             return nodes;
         }
 
-        public async Task<string[]> GetShortestPath(string nodeFrom, string nodeTo)
+        public Task<string[]> GetShortestPath(string nodeFrom, string nodeTo)
         {
-            return new string[] { nodeFrom, nodeTo };
+            return Task.FromResult(new string[] { nodeFrom, nodeTo });
         }
 
-        public async Task<string[][]> GetGraphComponents()
+        public Task<string[][]> GetGraphComponents()
         {
-            return new string[][] { nodes.Select(n => n.ID).ToArray() };
+            return Task.FromResult(new string[][] { nodes.Select(n => n.ID).ToArray() });
         }
     }
 }
