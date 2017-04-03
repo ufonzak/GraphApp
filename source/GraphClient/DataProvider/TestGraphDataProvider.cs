@@ -10,7 +10,9 @@ namespace GraphClient.DataProvider
     class TestGraphDataProvider : IGraphDataProvider
     {
         public const int NODE_COUNT = 10; 
-        public const int EDGE_COUNT = 25; 
+        public const int EDGE_COUNT = 25;
+
+        GraphNode[] nodes;
 
         public async Task<GraphNode[]> GetAllNodes()
         {
@@ -18,7 +20,7 @@ namespace GraphClient.DataProvider
 
             Random rand = new Random();
 
-            var nodes = Enumerable.Range(1, NODE_COUNT).Select(id => new GraphNode
+            nodes = Enumerable.Range(1, NODE_COUNT).Select(id => new GraphNode
             {
                 ID = id.ToString(),
                 Label = $"N{id}",
@@ -50,7 +52,7 @@ namespace GraphClient.DataProvider
 
         public async Task<string[][]> GetGraphComponents()
         {
-            return new string[][] { };
+            return new string[][] { nodes.Select(n => n.ID).ToArray() };
         }
     }
 }

@@ -10,6 +10,7 @@ namespace GraphClient
         public override void Load()
         {
             Bind<IGraphDataProvider>().To<WebServiceProvider>();
+            //Bind<IGraphDataProvider>().To<TestGraphDataProvider>();
             Bind<GraphDataService.GraphDataServiceClient>().ToSelf();
             Bind<GraphQueryService.GraphQueryServiceClient>().ToSelf();
         }
