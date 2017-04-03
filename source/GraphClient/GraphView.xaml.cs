@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
+using System.Diagnostics;
 
 namespace GraphClient
 {
@@ -55,7 +56,15 @@ namespace GraphClient
             selectedNodes.Clear();
             layoutTimer.Stop();
 
-            await dataContext.LoadNodes();
+            try
+            {
+                await dataContext.LoadNodes();
+            }
+            catch (Exception er)
+            {
+                Debug.WriteLine(er);
+                MessageBox.Show("Error during nodes loading.", "Error");
+            }
 
             layoutTimer.Start();
 
@@ -72,7 +81,15 @@ namespace GraphClient
 
             IsEnabled = false;
 
-            await dataContext.FindPath(selectedNodes[0], selectedNodes[1]);
+            try
+            {
+                await dataContext.FindPath(selectedNodes[0], selectedNodes[1]);
+            }
+            catch (Exception er)
+            {
+                Debug.WriteLine(er);
+                MessageBox.Show("Error during path finding.", "Error");
+            }
 
             IsEnabled = true;
         }
