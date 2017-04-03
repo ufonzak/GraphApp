@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using GraphServices.DTO;
 using System.Windows.Threading;
+using System.Windows.Controls.Primitives;
 
 namespace GraphClient
 {
@@ -25,15 +26,12 @@ namespace GraphClient
     /// </summary>
     public partial class GraphView : UserControl
     {
-        IGraphDataProvider dataProvider;
+        private GraphDataContext dataContext;
 
-        private readonly Random random = new Random();
+        private List<GraphNodeModel> selectedNodes = new List<GraphNodeModel>();
 
-        public ObservableCollection<GraphNodeModel> Nodes { get; private set; } = new ObservableCollection<GraphNodeModel>();
-        public ObservableCollection<EdgeModel> Edges { get; private set; } = new ObservableCollection<EdgeModel>();
-        public ObservableCollection<SelfLoofModel> SelfLoops { get; private set; } = new ObservableCollection<SelfLoofModel>();
-
-        Dictionary<string, GraphNodeModel> nodeModeIdCache = new Dictionary<string, GraphNodeModel>();
+        private GraphLayout.IGraphLayout graphLayout;
+        private DispatcherTimer layoutTimer;
 
         public GraphView()
         {
@@ -44,202 +42,68 @@ namespace GraphClient
                 return;
             }
 
-            dataProvider = Kernel.Get<IGraphDataProvider>();
-
             Loaded += GraphView_Loaded;
 
-            DataContext = this;
+            dataContext = Kernel.Get<GraphDataContext>();
+            DataContext = dataContext;
+
+            graphLayout = Kernel.Get<GraphLayout.IGraphLayout>();
 
             layoutTimer = new DispatcherTimer();
             layoutTimer.Interval = TimeSpan.FromMilliseconds(100);
             layoutTimer.Tick += LayoutTimer_Tick;
         }
 
-        private async void GraphView_Loaded(object sender, RoutedEventArgs e)
+        private void GraphView_Loaded(object sender, RoutedEventArgs e)
         {
-            IsEnabled = false;
-            await LoadNodes();
-            IsEnabled = true;
+            btnLoadNodes.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
         }
 
         private async void btnLoadNodes_Click(object sender, RoutedEventArgs e)
         {
             IsEnabled = false;
-            await LoadNodes();
+
+            selectedNodes.Clear();
+            layoutTimer.Stop();
+
+            await dataContext.LoadNodes();
+
+            layoutTimer.Start();
+
             IsEnabled = true;
         }
 
         private async void btnFindPath_Click(object sender, RoutedEventArgs e)
         {
             IsEnabled = false;
-            await FindPath();
-            IsEnabled = true;
-        }
-
-        private async Task FindPath()
-        {
             if (selectedNodes.Count < 2)
             {
                 MessageBox.Show("Please select two nodes.");
                 return;
             }
 
-            var path = await dataProvider.GetShortestPath(selectedNodes[0].ID, selectedNodes[1].ID);
-            if (path == null)
-            {
-                MessageBox.Show("No path found.");
-                return;
-            }
+            await dataContext.FindPath(selectedNodes[0], selectedNodes[1]);
 
-            GraphNodeModel[] nodes;
-            try
-            {
-                nodes = path.Select(nodeId => nodeModeIdCache[nodeId]).ToArray();
-            }
-            catch (KeyNotFoundException)
-            {
-                return;
-            }
-
-            foreach (var edge in Edges)
-            {
-                edge.Marked = false;
-            }
-
-            GraphNodeModel last = nodes[0];
-            foreach(GraphNodeModel model in nodes.Skip(1))
-            {
-                var edge = last.Edges.FirstOrDefault(e => e.Node1 == model || e.Node2 == model);
-                if (edge == null)
-                {
-                    return;
-                }
-
-                edge.Marked = true;
-                last = model;
-            }
+            IsEnabled = true;
         }
-
-        private async Task LoadNodes()
-        {
-            var nodes = await dataProvider.GetAllNodes();
-            var components = await dataProvider.GetGraphComponents();
-
-            Nodes.Clear();
-            nodeModeIdCache.Clear();
-            selectedNodes.Clear();
-            Edges.Clear();
-            SelfLoops.Clear();
-
-            foreach (var node in nodes)
-            {
-                var nodeView = new GraphNodeModel(node)
-                {
-                    Position = new Point(random.NextDouble() * 1000, random.NextDouble() * 1000)
-                };
-                nodeModeIdCache.Add(node.ID, nodeView);
-                Nodes.Add(nodeView);
-            }
-
-            foreach (var node in nodes)
-            {
-                GraphNodeModel view1 = nodeModeIdCache[node.ID];
-
-                foreach (var adjacentId in node.AdjacentNodeIDs)
-                {
-                    //self-loop
-                    if (adjacentId == node.ID)
-                    {
-                        SelfLoops.Add(new SelfLoofModel(view1));
-                        continue;
-                    }
-
-                    //resolve bi-directional edges
-                    if (node.ID.CompareTo(adjacentId) > 0)
-                    {
-                        continue;
-                    }
-
-                    GraphNodeModel view2;
-                    if (!nodeModeIdCache.TryGetValue(adjacentId, out view2))
-                    {
-                        continue;
-                    }
-
-                    Edges.Add(new EdgeModel(view1, view2));
-                }
-            }
-
-            foreach(var component in components)
-            {
-                foreach(var nodeId in component)
-                {
-                    nodeModeIdCache[nodeId].Component = component[0];
-                }
-            }
-
-            layoutTimer.Start();
-        }
-
-        #region layout
-        //TODO: refactor to class
-
-        private DispatcherTimer layoutTimer;
 
         private void LayoutTimer_Tick(object sender, EventArgs e)
         {
-            LayoutNodes();
+            bool runMore = graphLayout.RunInteration(dataContext.Nodes);
             PlaceComponents();
-        }
 
-        private const double REPULSION_FORCE = 10000.0;
-        private const double ATRACTION_FORCE = 0.1;
-        private const double DAMPING_COEF = 0.95;
-
-        private void LayoutNodes()
-        {
-            double maxForce = 0;
-
-            foreach (var node1 in Nodes)
-            {
-                Point force = new Point(0, 0);
-
-                foreach (var node2 in Nodes.Where(node => node != node1 && node.Component == node1.Component))
-                {
-                    var difference = node1.Position.Minus(node2.Position);
-                    var distance = difference.Size();
-
-                    force = force.Plus(difference.Multi(REPULSION_FORCE / Math.Pow(distance, 2.0) / Nodes.Count));
-                }
-
-                foreach (var edge in node1.Edges)
-                {
-                    var difference = edge.P1.Minus(edge.P2);
-                    if (edge.Node1 == node1)
-                    {
-                        difference = difference.Multi(-1);
-                    }
-
-                    force = force.Plus(difference.Multi(ATRACTION_FORCE / node1.Edges.Count));
-                }
-
-                node1.Position = node1.Position.Plus(force.Multi(DAMPING_COEF));
-                maxForce = Math.Max(maxForce, force.Size());
-            }
-
-            if (maxForce < 2)
+            if (!runMore)
             {
                 layoutTimer.Stop();
             }
         }
-        #endregion
 
         private void PlaceComponents()
         {
             double totalX = 0;
             double totalMaxY = 0;
 
-            foreach (var component in Nodes
+            foreach (var component in dataContext.Nodes
                 .GroupBy(node => node.Component)
                 .OrderByDescending(component => component.Count()))
             {
@@ -272,11 +136,10 @@ namespace GraphClient
         private void Node_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             string tag = (sender as FrameworkElement).Tag.ToString();
-            GraphNodeModel model = nodeModeIdCache[tag];
+            GraphNodeModel model = dataContext.GetModel(tag);
             Select(model);
         }
 
-        private List<GraphNodeModel> selectedNodes = new List<GraphNodeModel>();
         private void Select(GraphNodeModel node)
         {
             if (node.Selected)

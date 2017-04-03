@@ -13,6 +13,7 @@ namespace GraphClient
             //Bind<IGraphDataProvider>().To<TestGraphDataProvider>();
             Bind<GraphDataService.GraphDataServiceClient>().ToSelf();
             Bind<GraphQueryService.GraphQueryServiceClient>().ToSelf();
+            Bind<GraphLayout.IGraphLayout>().To<GraphLayout.ForceBasedLayout>();
         }
     }
 }

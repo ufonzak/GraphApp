@@ -67,6 +67,9 @@
     <Compile Include="DataProvider\IGraphDataProvider.cs" />
     <Compile Include="DataProvider\TestGraphDataProvider.cs" />
     <Compile Include="DataProvider\WebServiceProvider.cs" />
+    <Compile Include="GraphDataContext.cs" />
+    <Compile Include="GraphLayout\ForceBasedLayout.cs" />
+    <Compile Include="GraphLayout\IGraphLayout.cs" />
     <Compile Include="Models\EdgeModel.cs" />
     <Compile Include="Models\GraphNodeModel.cs" />
     <Compile Include="GraphView.xaml.cs">
