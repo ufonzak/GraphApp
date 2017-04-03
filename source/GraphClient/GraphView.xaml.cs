@@ -189,7 +189,7 @@ namespace GraphClient
         private void LayoutTimer_Tick(object sender, EventArgs e)
         {
             LayoutNodes();
-            OffsetGraph();
+            PlaceComponents();
         }
 
         private const double REPULSION_FORCE = 10000.0;
@@ -234,28 +234,39 @@ namespace GraphClient
         }
         #endregion
 
-        private void OffsetGraph()
+        private void PlaceComponents()
         {
-            double minX = double.MaxValue, maxX = double.MinValue, minY = double.MaxValue, maxY = double.MinValue;
+            double totalX = 0;
+            double totalMaxY = 0;
 
-            foreach (var node in Nodes)
+            foreach (var component in Nodes
+                .GroupBy(node => node.Component)
+                .OrderByDescending(component => component.Count()))
             {
-                minX = Math.Min(minX, node.Position.X);
-                minY = Math.Min(minY, node.Position.Y);
-                maxX = Math.Max(maxX, node.Position.X);
-                maxY = Math.Max(maxY, node.Position.Y);
+                double minX = double.MaxValue, maxX = double.MinValue, minY = double.MaxValue, maxY = double.MinValue;
+
+                foreach (var node in component)
+                {
+                    minX = Math.Min(minX, node.Position.X);
+                    minY = Math.Min(minY, node.Position.Y);
+                    maxX = Math.Max(maxX, node.Position.X);
+                    maxY = Math.Max(maxY, node.Position.Y);
+                }
+
+                foreach (var node in component)
+                {
+                    node.Position = node.Position.Minus(new Point(minX - totalX, minY));
+                }
+
+                double width = maxX - minX + 100;
+                double height = maxY - minY + 100;
+
+                totalMaxY = Math.Max(totalMaxY, height);
+                totalX += width;
             }
 
-            foreach (var node in Nodes)
-            {
-                node.Position = node.Position.Minus(new Point(minX, minY));
-            }
-
-            double width = maxX - minX + 100;
-            double height = maxY - minY + 100;
-
-            canvas.Width = width;
-            canvas.Height = height;
+            canvas.Width = totalX;
+            canvas.Height = totalMaxY;
         }
 
         private void Node_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
