@@ -15,7 +15,7 @@ namespace WebServices.Algorithms
         Dictionary<string, NodeWrap> nodesDictionary;
         Queue<NodeWrap> workQueue;
 
-        List<NodeWrap> stack = new List<NodeWrap>();
+        List<NodeWrap> stack;
 
         public DfsGraphComponents(IGraphNodeDAO _graphNodeDao)
         {
@@ -24,6 +24,12 @@ namespace WebServices.Algorithms
 
         public async Task<string[][]> GetGraphComponents()
         {
+            if (stack != null)
+            {
+                throw new InvalidOperationException("instance already used");
+            }
+            stack = new List<NodeWrap>();
+
             var nodes = await graphNodeDao.GetAllGraphNodes();
             nodesDictionary = nodes
                 .Select(node => new NodeWrap { Node = node })

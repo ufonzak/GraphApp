@@ -10,21 +10,21 @@ namespace WebServices.Algorithms
 {
     public class BfsShortestPath : IShortestPath
     {
-        IGraphNodeDAO graphNodeDao;
+        private IGraphNodeDAO graphNodeDao;
+
+        private string nodeIdFrom;
+        private string nodeIdTo;
+
+        private NodeWrap goalNode = null;
+
+        private Queue<NodeWrap> queue;
+
+        private ISet<string> visitedNodes = new HashSet<string>();
 
         public BfsShortestPath(IGraphNodeDAO _graphNodeDao)
         {
             graphNodeDao = _graphNodeDao;
         }
-
-        private string nodeIdFrom;
-        private string nodeIdTo;
-
-        NodeWrap goalNode = null;
-
-        private Queue<NodeWrap> queue;
-
-        private ISet<string> visitedNodes = new HashSet<string>();
 
         public async Task<string[]> GetShortestPath(string _nodeIdFrom, string _nodeIdTo)
         {
